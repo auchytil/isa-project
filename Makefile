@@ -10,6 +10,9 @@ SOURCE = src/args.cpp src/client.cpp src/main.cpp src/msg.cpp
 all:
 	$(CPP) $(CPPFLAGS) -o $(NAME) $(SOURCE)
 
+run:
+	./$(NAME)
+
 # Phony #
 #########
 .PHONY: clean

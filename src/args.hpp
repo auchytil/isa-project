@@ -6,6 +6,8 @@
 #ifndef ARGS_HPP
 #define ARGS_HPP
 
+#include "env.hpp"
+
 #include <string>
 #include <vector>
 
@@ -20,6 +22,7 @@ private:
   int delay = 0;
 public:
   ArgParser (int argc, char* argv[]);
+  Envelope* GetEnvelope();
 };
 
 #endif // ARGS_HPP

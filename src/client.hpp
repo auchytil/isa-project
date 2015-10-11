@@ -6,12 +6,15 @@
 #ifndef CLIENT_HPP
 #define CLIENT_HPP
 
+#include "env.hpp"
+
 class Client {
 private:
-  /* data */
+  Envelope *env;
 public:
-  Client (Message *msg);
+  Client (Envelope *env);
   virtual ~Client ();
+  void SendMails();
 };
 
 #endif //CLIENT_HPP

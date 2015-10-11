@@ -7,13 +7,17 @@
 #include <iostream>
 
 #include "args.hpp"
+#include "client.hpp"
+#include "env.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
   ArgParser argparser = ArgParser(argc, argv);
-  cout << "#yolo" << endl;
+  Envelope *env = argparser.GetEnvelope();
+  Client client = Client(env);
+  client.SendMails();
 
-  return 1;
+  return 0;
 }
