@@ -14,12 +14,12 @@ using namespace std;
 class Message
 {
 private:
-  vector<string> recipients;
-  string content;
 public:
   Message();
+  Message(string line);
+  vector<string> recipients;
+  string content;
   void addRecipient(string addr);
-  void setContent();
 };
 
 #endif //MSG_HPP

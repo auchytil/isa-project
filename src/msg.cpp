@@ -6,6 +6,11 @@
 
 #include "msg.hpp"
 
+Message::Message(string line)
+{
+
+}
+
 /**
  * Add new recipient to receive a message.
  *

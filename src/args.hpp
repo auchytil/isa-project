@@ -18,8 +18,12 @@ private:
   vector<string> args;
   string ip = "127.0.0.1";
   string port = "25";
-  string filename;
+  enum ip_type type = IPv4;
+  string filename = "";
   int delay = 0;
+  void setDelay(string delay);
+  void setIP(string ip);
+  bool parseArgs();
 public:
   ArgParser (int argc, char* argv[]);
   Envelope* GetEnvelope();
