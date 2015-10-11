@@ -6,7 +6,10 @@
 #ifndef MSG_HPP
 #define MSG_HPP
 
+#include <string>
 #include <vector>
+
+using namespace std;
 
 class Message
 {

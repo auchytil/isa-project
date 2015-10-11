@@ -4,6 +4,8 @@
  * @brief Argparser
  */
 
+#include "args.hpp"
+
 /**
  * ArgParser constructor.
  *
@@ -13,6 +15,6 @@
 ArgParser::ArgParser(int argc, char* argv[])
 {
   for (int i = 1; i < argc; i++) {
-    
+
   }
 }

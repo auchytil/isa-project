@@ -4,6 +4,8 @@
  * @brief Message model
  */
 
+#include "msg.hpp"
+
 /**
  * Add new recipient to receive a message.
  *
