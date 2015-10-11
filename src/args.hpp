@@ -1,6 +1,6 @@
 /**
  * @file args.hpp
- * @author Albert Uchytil
+ * @author Albert Uchytil (xuchyt03)
  * @brief ArgParser
  */
 #ifndef ARGS_HPP

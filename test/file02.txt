@@ -1,0 +1,2 @@
+lakatos@isa.local Messsage for user lakatos
+etela@isa.local,lakatos@isa.local Message for etela and lakatos

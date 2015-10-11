@@ -1,12 +1,14 @@
 /**
  * @file args.hpp
- * @author Albert Uchytil
+ * @author Albert Uchytil (xuchyt03)
  * @brief Argparser
  */
 
 #include "args.hpp"
 
+#include <fstream>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -45,6 +47,18 @@ Envelope* ArgParser::GetEnvelope()
   env->delay = this->delay;
   env->type = this->type;
 
+  ifstream input_file(this->filename);
+  if (input_file.good()) {
+    for (string msg_line; getline(input_file, msg_line);) {
+      env->msgs.push_back(Message(msg_line));
+    }
+  } else {
+    std::cerr << "Error during opening of file." << std::endl;
+    input_file.close();
+    delete env;
+    return NULL;
+  }
+  input_file.close();
   return env;
 }
 
