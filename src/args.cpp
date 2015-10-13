@@ -50,7 +50,12 @@ Envelope* ArgParser::GetEnvelope()
   ifstream input_file(this->filename);
   if (input_file.good()) {
     for (string msg_line; getline(input_file, msg_line);) {
-      env->msgs.push_back(Message(msg_line));
+      try {
+        env->msgs.push_back(Message(msg_line));
+      } catch (string err) {
+        std::cerr << err << std::endl;
+        return NULL;
+      }
     }
   } else {
     std::cerr << "Error during opening of file." << std::endl;
@@ -69,7 +74,8 @@ Envelope* ArgParser::GetEnvelope()
  */
 void ArgParser::setDelay(string delay)
 {
-
+  //TODO: check if delay is valid
+  this->delay = atoi(delay.c_str());
 }
 
 /**
@@ -79,7 +85,9 @@ void ArgParser::setDelay(string delay)
  */
 void ArgParser::setIP(string ip)
 {
-
+  //TODO: check IPv?
+  //TODO: validate ip
+  this->ip = ip;
 }
 
 /**

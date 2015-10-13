@@ -6,7 +6,9 @@
 #ifndef MSG_HPP
 #define MSG_HPP
 
+#include <iostream>
 #include <string>
+#include <regex>
 #include <vector>
 
 using namespace std;
@@ -14,12 +16,12 @@ using namespace std;
 class Message
 {
 private:
+  static bool isAddrValid(string mail);
 public:
-  Message();
-  Message(string line);
+  Message(string msg_line);
   vector<string> recipients;
   string content;
-  void addRecipient(string addr);
+  void AddRecipient(string addr);
 };
 
 #endif //MSG_HPP
