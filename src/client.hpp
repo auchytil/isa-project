@@ -8,9 +8,20 @@
 
 #include "env.hpp"
 
+#include <cstring>
+#include <arpa/inet.h>
+#include <netinet/in.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/ioctl.h>
+#include <netdb.h>
+#include <unistd.h>
+
 class Client {
 private:
   Envelope *env;
+  int sock;
+  void openConnection();
 public:
   Client (Envelope *env);
   virtual ~Client ();

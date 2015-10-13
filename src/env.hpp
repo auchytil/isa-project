@@ -21,7 +21,7 @@ public:
   vector<Message> msgs;
   string ip;
   enum ip_type type;
-  string port;
+  uint port;
   int delay;
 };
 

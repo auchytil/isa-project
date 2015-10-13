@@ -91,6 +91,17 @@ void ArgParser::setIP(string ip)
 }
 
 /**
+ * Sets SMTP server port.
+ *
+ * @param port Port of SMTP server to connect.
+ */
+void ArgParser::setPort(string port)
+{
+  //TODO: validate port
+  this->port = atoi(port.c_str());
+}
+
+/**
  * Parses arguments and checks if they're valid.
  *
  * @return bool Valid args.
@@ -111,7 +122,7 @@ bool ArgParser::parseArgs()
 
     if (current_value == "-p") { //port
       if (next_index < arg_count)
-        this->port = this->args[i+1];
+        this->setPort(this->args[i+1]);
       else
         return false;
     }
