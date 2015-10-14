@@ -8,6 +8,8 @@
 
 Client::Client(Envelope *env)
 {
+  if (env == NULL)
+    throw "Error: Envelope cannot be NULL.";
   this->env = env;
 }
 
@@ -23,8 +25,21 @@ void Client::SendMails()
 {
   this->openConnection();
   this->initConnection();
-
+  int sent = 0;
+  for (unsigned i = 0; i < this->env->msgs.size(); i++) {
+    try {
+      auto msg = this->env->msgs[i];
+      this->sendMessage(msg);
+      sent++;
+    } catch (char const *err) {
+      std::cerr << "Error: Was not able to send email no.";
+      std::cerr << i << "." << std::endl;
+    }
+  }
   this->closeConnection();
+
+  if (sent == 0)
+    throw "Error: Client was not able to send any E-Mails.";
 }
 
 /**
@@ -84,7 +99,6 @@ int Client::readResponse()
   stringstream ss(this->buffer);
   int code;
   ss >> code;
-  std::cout << code << std::endl;
   return code;
 }
 
@@ -95,8 +109,43 @@ void Client::initConnection()
 {
   string host = "isa.local";
   int code = this->sendCommand("EHLO " + host);
-  if (code == 0)
-    code++;
+  if (code != 250)
+    throw "Error: Invalid SMTP host.";
+}
+
+/**
+ * Send particular Message.
+ *
+ * @param msg Message data.
+ */
+void Client::sendMessage(Message msg)
+{
+  this->setSender();
+  for (unsigned i = 0; i < msg.recipients.size(); i++) {
+    auto rcpt = msg.recipients[i];
+    int code = this->sendCommand("RCPT TO: <" + rcpt + ">");
+    if (code != 250) {
+      std::cerr << "Error: There was problem with sending mail to ";
+      std::cerr << rcpt << "." << std::endl;
+    }
+  }
+  int code = this->sendCommand("DATA");
+  if (code != 354)
+    throw "Error: Unable to send email.";
+
+  string data = msg.content + "\r\n.";
+  code = this->sendCommand(data);
+  if (code != 250)
+    throw "Error: Unable to send email.";
+}
+
+/**
+ * Sets SMTP
+ */
+void Client::setSender()
+{
+  string mail = "xuchyt03@isa.local";
+  this->sendCommand("MAIL FROM: <" + mail + ">");
 }
 
 /**

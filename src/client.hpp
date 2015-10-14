@@ -32,7 +32,9 @@ private:
   int readResponse();
 
   void initConnection();
-
+  void sendMessage(Message msg);
+  void setSender();
+  void setRecipients();
   void closeConnection();
 public:
   Client (Envelope *env);

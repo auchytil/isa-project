@@ -58,7 +58,7 @@ Envelope* ArgParser::GetEnvelope()
       }
     }
   } else {
-    std::cerr << "Error during opening of file." << std::endl;
+    std::cerr << "Error: Cannot open file." << std::endl;
     input_file.close();
     delete env;
     return NULL;
