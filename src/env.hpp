@@ -20,7 +20,7 @@ class Envelope
 public:
   vector<Message> msgs;
   string ip;
-  enum ip_type type;
+  int type;
   uint port;
   int delay;
 };

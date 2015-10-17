@@ -8,6 +8,10 @@
 
 #include "env.hpp"
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <cstring>
 #include <string>
 #include <vector>
 
@@ -18,7 +22,7 @@ private:
   vector<string> args;
   string ip = "127.0.0.1";
   uint port = 25;
-  enum ip_type type = IPv4;
+  int type = AF_INET;
   string filename = "";
   int delay = 0;
   void setDelay(string delay);

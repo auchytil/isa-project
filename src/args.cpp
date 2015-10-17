@@ -85,9 +85,16 @@ void ArgParser::setDelay(string delay)
  */
 void ArgParser::setIP(string ip)
 {
-  //TODO: check IPv?
-  //TODO: validate ip
-  this->ip = ip;
+  struct addrinfo addr, *info;
+  memset(&addr, 0,sizeof(addr));
+  addr.ai_family = AF_UNSPEC;
+  addr.ai_flags = AI_NUMERICHOST;
+  if (!getaddrinfo(ip.c_str(), 0, &addr, &info)) {
+    this->ip = ip;
+    this->type = info->ai_family;
+    freeaddrinfo(info);
+  } else
+    throw "Error: Invalid IP";
 }
 
 /**
