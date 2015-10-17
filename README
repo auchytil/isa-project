@@ -1,0 +1,85 @@
+Project: ISA - SMTP client for mail sending
+===========================================
+Authors: Albert Uchytil (xuchyt03)
+
+Description
+-----------
+School project for Network Applications and Network Administration.
+
+Simple SMTP client. The connection to the server is not encrypted.
+
+Implementation details
+----------------------
+SMTP client application written using C++. This implementation uses OOP approach.
+Application consist of four classes.
+
+`Envelope` and 'Message' are used as data models.
+`ArgParser` focuses on argument parsing and validation. It fills the data models.
+After filling the models with valid data, the `Client` class instance is created.
+All communication with the SMTP server happens within the `Client`.
+
+Usage
+-----
+```sh
+$ ./smtpclient [ -a IP ] [ -p port] [ -i file ] [ -w seconds ]
+```
+
+Options
+-------
+* `-a IP`
+  * Address of the SMTP server
+  * Optional
+  * Default value is `127.0.0.1`
+* `-p port`
+  * Port on which the SMTP server is running
+  * Optional
+  * Default value is `25`
+* `-i file`
+  * Path to client's configuration file, that contains E-Mails
+  * Required
+* `-w seconds`
+  * Number of seconds to delay the closing of the connection with the server
+  * Must be number from `0` to `3600`
+  * Optional
+  * Default value is `0`
+
+Examples
+--------
+```sh
+$ ./smtpclient -i test/file01.txt
+```
+```sh
+$ ./smtpclient -a 192.168.2.145 -p 1337 -i test/file02.txt
+```
+```sh
+$ .smtpclient -i test/file03.txt -w 60
+```
+
+Notes
+-----
+* Uses `isa.local` as hard-coded hostname, because it is the hostname of the testing server
+* Uses `xuchyt03@isa.local` as a sender
+
+Make options
+------------
+* `make`
+  * Builds the project
+* `make clean`
+  * Removes compiled files
+
+Files required for submission
+-----------------------------
+* src/args.cpp
+* src/args.hpp
+* src/client.cpp
+* src/client.hpp
+* src/env.cpp
+* src/env.hpp
+* src/main.cpp
+* src/msg.cpp
+* src/msg.hpp
+* test/file01.txt
+* test/file02.txt
+* test/file03.txt
+* Makefile
+* README
