@@ -1,11 +1,10 @@
-Project: ISA - SMTP client for mail sending
-===========================================
+Project: ISA - SMTP client
+==========================
 Authors: Albert Uchytil (xuchyt03)
 
 Description
 -----------
 School project for Network Applications and Network Administration.
-
 Simple SMTP client. The connection to the server is not encrypted.
 
 Implementation details
@@ -13,7 +12,7 @@ Implementation details
 SMTP client application written using C++. This implementation uses OOP approach.
 Application consist of four classes.
 
-`Envelope` and 'Message' are used as data models.
+`Envelope` and `Message` are used as data models.
 `ArgParser` focuses on argument parsing and validation. It fills the data models.
 After filling the models with valid data, the `Client` class instance is created.
 All communication with the SMTP server happens within the `Client`.
@@ -52,7 +51,7 @@ $ ./smtpclient -i test/file01.txt
 $ ./smtpclient -a 192.168.2.145 -p 1337 -i test/file02.txt
 ```
 ```sh
-$ .smtpclient -i test/file03.txt -w 60
+$ ./smtpclient -i test/file03.txt -w 60
 ```
 
 Notes
