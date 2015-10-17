@@ -75,7 +75,9 @@ Envelope* ArgParser::GetEnvelope()
 void ArgParser::setDelay(string delay)
 {
   int seconds = atoi(delay.c_str());
-  if (seconds >= 0 && seconds <= 3600)
+  stringstream ss;
+  ss << seconds;
+  if (seconds >= 0 && seconds <= 3600 && ss.str() == delay)
     this->delay = seconds;
   else
     throw "Error: Invalid delay.";
