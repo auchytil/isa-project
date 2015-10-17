@@ -74,8 +74,11 @@ Envelope* ArgParser::GetEnvelope()
  */
 void ArgParser::setDelay(string delay)
 {
-  //TODO: check if delay is valid
-  this->delay = atoi(delay.c_str());
+  int seconds = atoi(delay.c_str());
+  if (seconds >= 0 && seconds <= 3600)
+    this->delay = seconds;
+  else
+    throw "Error: Invalid delay.";
 }
 
 /**
@@ -104,8 +107,11 @@ void ArgParser::setIP(string ip)
  */
 void ArgParser::setPort(string port)
 {
-  //TODO: validate port
-  this->port = atoi(port.c_str());
+  int p = atoi(port.c_str());
+  if (p > 0)
+    this->port = p;
+  else
+    throw "Error: Invalid port number.";
 }
 
 /**

@@ -152,5 +152,6 @@ void Client::setSender()
  */
 void Client::closeConnection()
 {
+  sleep(this->env->delay);
   this->sendCommand("QUIT");
 }
