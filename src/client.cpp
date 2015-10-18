@@ -48,16 +48,33 @@ void Client::SendMails()
 void Client::openConnection()
 {
   struct sockaddr_in socket_in;
+  struct timeval timeout;
+  fd_set fdset;
 
   if ((this->sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
     throw "Error: Unable to create socket.";
+
+  fcntl(this->sock, F_SETFL, O_NONBLOCK);
 
   socket_in.sin_family = this->env->type;
   socket_in.sin_addr.s_addr = inet_addr(this->env->ip.c_str());
   socket_in.sin_port = htons(this->env->port);
 
-  if (connect(this->sock, (struct sockaddr *) &socket_in, sizeof(socket_in)) < 0)
-    throw "Error: Unable to connect to SMTP server.";
+  /*if (*/connect(this->sock, (struct sockaddr *) &socket_in, sizeof(socket_in));/* < 0)
+    throw "Error: Unable to connect to SMTP server.";*/
+
+  FD_ZERO(&fdset);
+  FD_SET(this->sock, &fdset);
+  timeout.tv_sec = TIMEOUT;
+  timeout.tv_usec = 0;
+
+  if (select(this->sock + 1, NULL, &fdset, NULL, &timeout) == 1) {
+    int err;
+    socklen_t len = sizeof(err);
+    if (getsockopt(sock, SOL_SOCKET, SO_ERROR, &err, &len) != 0)
+      throw "Error: Problem with connection to the socket.";
+  } else
+    throw "Error: Timeout.";
 
   this->readResponse();
 }

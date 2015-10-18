@@ -110,7 +110,9 @@ void ArgParser::setIP(string ip)
 void ArgParser::setPort(string port)
 {
   int p = atoi(port.c_str());
-  if (p > 0)
+  stringstream ss;
+  ss << p;
+  if (p > 0 && ss.str() == port)
     this->port = p;
   else
     throw "Error: Invalid port number.";
