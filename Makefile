@@ -4,6 +4,7 @@ CPP = g++
 CPPFLAGS = -std=c++11 -fPIC -pedantic -Wall -Werror -g
 NAME = smtpclient
 SOURCE = src/args.cpp src/client.cpp src/main.cpp src/msg.cpp
+LOGIN = xuchyt03
 
 # Rules #
 #########
@@ -15,6 +16,10 @@ run:
 
 # Phony #
 #########
-.PHONY: clean
+.PHONY: clean pack
 clean:
 	-rm $(NAME)
+	-rm $(LOGIN).tar
+
+pack:
+	tar cf $(LOGIN).tar *
