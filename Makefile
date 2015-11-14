@@ -3,7 +3,7 @@
 CPP = g++
 CPPFLAGS = -std=c++11 -fPIC -pedantic -Wall -Werror -g
 NAME = smtpclient
-SOURCE = src/args.cpp src/client.cpp src/main.cpp src/msg.cpp
+SOURCE = src/args.cpp src/client.cpp src/main.cpp src/msg.cpp src/signal.cpp src/status.cpp
 LOGIN = xuchyt03
 
 # Rules #

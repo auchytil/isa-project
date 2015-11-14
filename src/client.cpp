@@ -5,6 +5,8 @@
  */
 
  #include "client.hpp"
+ #include "signal.hpp"
+ #include "status.hpp"
 
 Client::Client(Envelope *env)
 {
@@ -19,13 +21,28 @@ Client::~Client ()
 }
 
 /**
+ * Checks whether program was interrupted.
+ */
+void Client::checkInterrupt()
+{
+  if (SignalHandler::GetExitStatus()) {
+    this->closeConnection();
+    std::cerr << "Error: Interrupted" << std::endl;
+    exit(1);
+  }
+}
+
+/**
  * Sends E-Mails.
  */
 void Client::SendMails()
 {
+  ApplicationStatus::SetCurrent(State::INIT);
   this->openConnection();
   this->initConnection();
+  this->checkInterrupt();
   int sent = 0;
+  ApplicationStatus::SetCurrent(State::SENDING);
   for (unsigned i = 0; i < this->env->msgs.size(); i++) {
     try {
       auto msg = this->env->msgs[i];
@@ -35,8 +52,10 @@ void Client::SendMails()
       std::cerr << "Error: Was not able to send email no.";
       std::cerr << i << "." << std::endl;
     }
+    this->checkInterrupt();
   }
   this->closeConnection();
+  ApplicationStatus::SetCurrent(State::FINISHED);
 
   if (sent == 0)
     throw "Error: Client was not able to send any E-Mails.";
@@ -123,6 +142,7 @@ int Client::readResponse()
  */
 void Client::initConnection()
 {
+  log("Initializing connection");
   string host = "isa.local";
   int code = this->sendCommand("EHLO " + host);
   if (code != 250)
@@ -136,23 +156,30 @@ void Client::initConnection()
  */
 void Client::sendMessage(Message msg)
 {
+  log("Setting MAIL FROM");
   this->setSender();
+  this->checkInterrupt();
   for (unsigned i = 0; i < msg.recipients.size(); i++) {
+    log("Setting RCPT TO");
     auto rcpt = msg.recipients[i];
     int code = this->sendCommand("RCPT TO: <" + rcpt + ">");
     if (code != 250) {
       std::cerr << "Error: There was problem with sending mail to ";
       std::cerr << rcpt << "." << std::endl;
     }
+    this->checkInterrupt();
   }
+  log("Setting DATA");
   int code = this->sendCommand("DATA");
   if (code != 354)
     throw "Error: Unable to send email.";
 
+  log("Sending mail content");
   string data = msg.content + "\r\n.";
   code = this->sendCommand(data);
   if (code != 250)
     throw "Error: Unable to send email.";
+  this->checkInterrupt();
 }
 
 /**
@@ -169,6 +196,8 @@ void Client::setSender()
  */
 void Client::closeConnection()
 {
-  sleep(this->env->delay);
+  if (!SignalHandler::GetExitStatus())
+    sleep(this->env->delay);
+  log("Closing connection");
   this->sendCommand("QUIT");
 }

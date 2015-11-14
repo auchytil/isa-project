@@ -21,6 +21,12 @@
 
 #define BUFFER_SIZE 4096
 #define TIMEOUT 10
+#define DEBUG 1
+#if DEBUG
+  #define log(x) std::cerr << "Log: " << (x) << std::endl
+#else
+  #define log(x)
+#endif
 
 class Client {
 private:
@@ -37,6 +43,8 @@ private:
   void setSender();
   void setRecipients();
   void closeConnection();
+
+  void checkInterrupt();
 public:
   Client (Envelope *env);
   virtual ~Client ();

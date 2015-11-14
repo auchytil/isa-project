@@ -9,12 +9,14 @@
 #include "args.hpp"
 #include "client.hpp"
 #include "env.hpp"
+#include "signal.hpp"
 
 using namespace std;
 
 int main(int argc, char* argv[])
 {
   try {
+    SignalHandler::SetupHandlers();
     ArgParser argparser = ArgParser(argc, argv);
     Envelope *env = argparser.GetEnvelope();
     Client client = Client(env);
