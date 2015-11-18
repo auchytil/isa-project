@@ -66,6 +66,10 @@ Make options
   * Builds the project
 * `make clean`
   * Removes compiled files
+* `make pack`
+  * Creates archive containing source files
+* `make run`
+  * Runs project
 
 Files required for submission
 -----------------------------
