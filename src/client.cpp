@@ -67,20 +67,31 @@ void Client::SendMails()
 void Client::openConnection()
 {
   struct sockaddr_in socket_in;
+  struct sockaddr_in6 socket_in6;
   struct timeval timeout;
   fd_set fdset;
 
-  if ((this->sock = socket(PF_INET, SOCK_STREAM, 0)) < 0)
+  int family = this->env->type == AF_INET ? PF_INET : PF_INET6;
+
+  if ((this->sock = socket(family, SOCK_STREAM, 0)) < 0)
     throw "Error: Unable to create socket.";
 
   fcntl(this->sock, F_SETFL, O_NONBLOCK);
 
-  socket_in.sin_family = this->env->type;
-  socket_in.sin_addr.s_addr = inet_addr(this->env->ip.c_str());
-  socket_in.sin_port = htons(this->env->port);
 
-  /*if (*/connect(this->sock, (struct sockaddr *) &socket_in, sizeof(socket_in));/* < 0)
-    throw "Error: Unable to connect to SMTP server.";*/
+  if (this->env->type == AF_INET) {
+    socket_in.sin_family = this->env->type;
+    socket_in.sin_addr.s_addr = inet_addr(this->env->ip.c_str());
+    socket_in.sin_port = htons(this->env->port);
+
+    connect(this->sock, (struct sockaddr *) &socket_in, sizeof(socket_in));
+  } else {
+    socket_in6.sin6_family = this->env->type;
+    inet_pton(AF_INET6, this->env->ip.c_str(), &(socket_in6.sin6_addr));
+    socket_in6.sin6_port = htons(this->env->port);
+
+    connect(this->sock, (struct sockaddr *) &socket_in6, sizeof(socket_in6));
+  }
 
   FD_ZERO(&fdset);
   FD_SET(this->sock, &fdset);
