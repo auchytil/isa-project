@@ -10,7 +10,7 @@ Simple SMTP client. The connection to the server is not encrypted.
 Implementation details
 ----------------------
 SMTP client application written using C++. This implementation uses OOP approach.
-Application consist of four classes.
+Application consist of six classes.
 
 `Envelope` and `Message` are used as data models.
 `ArgParser` focuses on argument parsing and validation. It fills the data models.

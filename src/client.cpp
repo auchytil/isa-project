@@ -200,4 +200,6 @@ void Client::closeConnection()
     sleep(this->env->delay);
   log("Closing connection");
   this->sendCommand("QUIT");
+  if (close(this->sock) != 0)
+    throw "Error: Unable to close socket";
 }
