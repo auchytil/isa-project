@@ -58,6 +58,7 @@ Notes
 -----
 * Uses `isa.local` as hard-coded hostname, because it is the hostname of the testing server
 * Uses `xuchyt03@isa.local` as a sender
+* `client.hpp` contains `DEBUG` macro which enables logging if set to `1`
 
 Make options
 ------------
@@ -77,6 +78,10 @@ Files required for submission
 * src/main.cpp
 * src/msg.cpp
 * src/msg.hpp
+* src/signal.cpp
+* src/signal.hpp
+* src/status.cpp
+* src/status.hpp
 * test/file01.txt
 * test/file02.txt
 * test/file03.txt
