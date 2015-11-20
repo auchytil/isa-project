@@ -17,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/ioctl.h>
 #include <netdb.h>
+#include <time.h>
 #include <unistd.h>
 
 #define BUFFER_SIZE 4096

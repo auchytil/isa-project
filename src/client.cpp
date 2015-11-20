@@ -130,10 +130,13 @@ int Client::sendCommand(string cmd)
 int Client::readResponse()
 {
   int len = 0;
-  int counter = TIMEOUT;
+  struct timespec rq;
+  rq.tv_nsec = 5000;
+  long nano_converter = 1000 * 1000 / 5; // approximation
+  long counter = TIMEOUT * nano_converter; //Converts timeout to nanoseconds
   while (!len && counter > 0 && ioctl(this->sock, FIONREAD, &len) >= 0) {
     counter--;
-    sleep(1);
+    nanosleep(&rq, NULL);
   }
 
   if (len <= 0)
